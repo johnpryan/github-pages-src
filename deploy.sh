@@ -16,4 +16,4 @@ TIME=`date +'%r'`
 
 git add .
 git commit -m "$DATE $TIME"
-git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" pages master
+git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" master 2>&1
