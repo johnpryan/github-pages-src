@@ -18,3 +18,8 @@ then run:
 make serve
 ```
 
+## Travis CI
+
+This uses [domenic's travis ci instructions](https://gist.github.com/domenic/ec8b0fc8ab45f39403dd) for
+automatic deployment to GitHub Pages.
+
