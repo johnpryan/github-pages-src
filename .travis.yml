@@ -1,6 +1,8 @@
 language: dart
 dart:
   - stable
+before_install:
+  - gem install sass
 env:
   global:
   - GH_REF: github.com/johnpryan/johnpryan.github.com.git
