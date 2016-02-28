@@ -1,5 +1,7 @@
 John Ryan's github pages site
 
+[![Build Status](https://travis-ci.org/johnpryan/github-pages-src.svg?branch=master)](https://travis-ci.org/johnpryan/github-pages-src)
+
 ## Dependencies
 
 [dart](https://www.dartlang.org/)
