@@ -1,3 +1,6 @@
 [submodule "dartbyexample"]
 	path = dartbyexample
 	url = https://github.com/johnpryan/dartbyexample.git
+[submodule "blog"]
+	path = blog
+	url = https://github.com/johnpryan/blog-src.git

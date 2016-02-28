@@ -15,7 +15,14 @@ dartbyexample: clean
 	mkdir ../build/dartbyexample &&\
 	cp -r build/web/* ../build/dartbyexample
 
-build: home dartbyexample
+blog: clean
+	cd blog &&\
+	pub get &&\
+	pub build &&\
+	mkdir ../build/blog &&\
+	cp -r build/web/* ../build/blog
+
+build: home dartbyexample blog
 
 serve:
 	dhttpd --path=build
