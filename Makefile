@@ -3,6 +3,7 @@ clean:
 
 home: clean
 	cd home &&\
+	pub get &&\
 	pub build &&\
 	mkdir ../build &&\
 	cp -r build/web/* ../build/
