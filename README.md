@@ -1,4 +1,4 @@
-# John Ryan's github pages site
+John Ryan's github pages site
 
 ## Dependencies
 
