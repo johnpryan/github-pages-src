@@ -22,7 +22,14 @@ blog: clean
 	mkdir ../build/blog &&\
 	cp -r build/web/* ../build/blog
 
-build: home dartbyexample blog
+githubby: clean
+	cd githubby &&\
+	pub get &&\
+	pub build &&\
+	mkdir ../build/githubby &&\
+	cp -r build/web/* ../build/githubby
+
+build: home dartbyexample blog githubby
 
 serve:
 	dhttpd --path=build
