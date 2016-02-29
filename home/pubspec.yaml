@@ -1,1 +1,13 @@
 name: home
+dependencies:
+  polymer: ^1.0.0-rc.11
+  web_components: ^0.12.0
+  browser: ^0.10.0
+  yaml: ^2.1.0
+  sass: any
+transformers:
+- sass:
+    $exclude: lib/third_party
+- polymer:
+    entry_points:
+    - web/index.html
