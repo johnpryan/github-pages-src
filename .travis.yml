@@ -1,6 +1,4 @@
-language: dart
-dart:
-  - stable
+language: ruby
 before_install:
   - gem install jekyll bundle sass
 env:
