@@ -1,0 +1,26 @@
+<nav>
+    <div class="section">
+        <h1>{{ site.name }}</h1>
+        <ul>
+            {% for item in site.data.navigation %}
+            <li>
+                <a href="{{ item.url }}">{{ item.title }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="section">
+        <h2>Articles</h2>
+        <ul>
+            {% for post in site.posts limit:3 %}
+            <li>
+                <a href="{{ post.url }}">{{ post.title }}</a>
+            </li>
+            {% endfor %}
+            <li><a class="all_articles_link" href="/all_articles.html">All Articles</a></li>
+        </ul>
+    </div>
+    <div class="footer">
+        &copy; {{ site.time | date: '%Y' }} John Ryan
+    </div>
+</nav>

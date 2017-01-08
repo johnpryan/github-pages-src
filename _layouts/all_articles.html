@@ -1,0 +1,15 @@
+---
+layout: default
+---
+<div class="post_back">
+    <a href="/">back</a>
+</div>
+<h2>All Articles:</h2>
+<ul class="all_articles">
+    {% for post in site.posts %}
+    <li>
+        <span class="date">{{ post.date | date: '%Y %b %d' }}</span>
+        <a href="{{ post.url }}">{{ post.title }}</a>
+    </li>
+    {% endfor %}
+</ul>
