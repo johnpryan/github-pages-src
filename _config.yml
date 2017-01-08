@@ -1,0 +1,14 @@
+# Blog settings
+permalink: /blog/:title
+
+# My variables
+name: John Ryan
+description: a journal
+
+exclude: [
+  "README.md",
+  "LICENSE",
+  "Gemfile",
+  "Gemfile.lock",
+  "deploy.sh"
+]
