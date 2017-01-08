@@ -2,7 +2,7 @@ language: dart
 dart:
   - stable
 before_install:
-  - gem install sass
+  - gem install jekyll bundle sass
 env:
   global:
   - GH_REF: github.com/johnpryan/johnpryan.github.com.git
