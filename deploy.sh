@@ -1,10 +1,10 @@
 #!/bin/bash
 
-echo "running make"
-make build
+echo "building jekyll blog"
+jekyll build
 
 echo "deploying"
-cd build
+cd _site
 git init
 git config user.name "Travis CI"
 git config user.email "john.p.ryan4@gmail.com"
