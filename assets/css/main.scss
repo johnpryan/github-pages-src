@@ -1,5 +1,8 @@
 ---
 ---
+
+@import url('https://fonts.googleapis.com/css?family=Inconsolata|PT+Serif:400,700|Source+Sans+Pro');
+
   // Reset everything:
 html, body, div, span, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr,
 acronym, address, cite, code, figure, img, ins, q, s, samp, small, strike, sub,
@@ -13,10 +16,10 @@ caption, tbody, tfoot, thead, tr, th, td {
   vertical-align: baseline;
 }
 
-$serif: Georgia, serif;
-$sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+$serif: "PT Serif", Georgia, serif;
+$sans: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
 $mono: 'Inconsolata', Menlo, Courier, monospace;
-$title: "Myriad Set Pro", "Helvetica Neue", Arial, sans-serif;
+$title: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
 
 $text-color: #272727;
 $link-color: #4670d8;
@@ -169,7 +172,7 @@ nav {
 
 article {
   overflow: hidden;
-  font-family: $sans;
+  font-family: $serif;
 }
 
 blockquote {
