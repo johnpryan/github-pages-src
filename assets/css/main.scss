@@ -17,10 +17,10 @@ caption, tbody, tfoot, thead, tr, th, td {
   vertical-align: baseline;
 }
 
-$serif: "Roboto Slab", Georgia, serif;
-$sans: "Roboto", "Helvetica Neue", Arial, sans-serif;
+$serif: Georgia, serif;
+$sans: "Helvetica Neue", Arial, sans-serif;
 $mono: 'Inconsolata', Menlo, Courier, monospace;
-$title: "Roboto Slab", "Helvetica Neue", Arial, sans-serif;
+$title: Georgia, serif;
 
 $text-color: #272727;
 $link-color: #4670d8;
@@ -50,9 +50,26 @@ $table-border-color: #ccc;
 $table-head-color: $text-color;
 $table-alt-bg: #F6F6F6;
 
-p {
-  margin-bottom: $margin;
-  line-height: 24px;
+$article-box-shadow: 0px 0px 15px 1px #bbbbbb;
+$article-padding: 64px;
+$article-padding-sm: 24px;
+
+body {
+  background-color: rgb(236,236,236);
+}
+
+p, li {
+  font-size: 18px;
+  line-height: 1.5em;
+}
+
+article p {
+  margin-bottom: 1.5em;
+}
+article {
+  h1, h2, h3, h4, h5, h6 {
+    margin-bottom: 0.5em;
+  }
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -110,11 +127,11 @@ pre {
 }
 
 h1 {
-  font-size: 1.75em;
+  font-size: 2.25em;
 }
 
 h2 {
-  font-size: 1.5em;
+  font-size: 1.75em;
 }
 
 h3 {
@@ -146,10 +163,9 @@ nav {
   font-family: $serif;
   color: $date-color;
   display: inline-block;
-}
-
-.all_articles_link {
-  color: $all-articles-color;
+  p {
+    margin-bottom: $margin;
+  }
 }
 
 .all_articles {
@@ -168,12 +184,14 @@ nav {
 
 .footer {
   font-family: $serif;
-  color: $date-color;
   margin-bottom: 32px;
   font-size: 0.8em;
 }
 
 article {
+  background-color: white;
+  box-shadow: $article-box-shadow;
+  padding: $article-padding;
   overflow: hidden;
   font-family: $serif;
 }
@@ -222,7 +240,6 @@ table {
 
 // Layout
 article, nav {
-  padding: $layout-padding;
   margin: $layout-margin;
 }
 
@@ -232,9 +249,9 @@ article, nav {
 
 // Grid
 .column {
-  max-width: 960px;
+  max-width: 1280px;
   margin: 0 auto;
-  padding: 60px 30px 60px 30px;
+  padding: 16px;
 
   display: flex;
   article {
@@ -242,6 +259,7 @@ article, nav {
     max-width: 640px;
   }
   nav {
+    padding: 16px;
     width: 320px;
   }
 }
@@ -249,5 +267,8 @@ article, nav {
 @media only screen and (max-width: 960px) {
   .column {
     display: block;
+  }
+  article {
+    padding: $article-padding-sm;
   }
 }

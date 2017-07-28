@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Switching To Dart
+tags: [Dart, Conferences]
 ---
 
 I gave a talk at the 2015 Dart Developer Summit about a topic I am very
