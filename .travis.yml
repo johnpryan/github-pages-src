@@ -10,7 +10,8 @@ env:
 script: bash ./deploy.sh
 deploy:
   local-dir: _site
-  repo: johnpryan/johnpryan.github.io
+  target-branch: master
+  repo: johnpryan/johnpryan.github.com
   provider: pages
   skip-cleanup: true
   github-token: $GITHUB_TOKEN
