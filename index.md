@@ -26,7 +26,7 @@ Current whereabouts: Portland, OR
 
 - A [patent][patent] for Workiva's text document style collaboration tool.
 
-## Blog Posts
+## Blog
 
 {% for post in site.posts %}
 <li>
@@ -34,6 +34,8 @@ Current whereabouts: Portland, OR
     <a href="{{ post.url }}">{{ post.title }}</a>
 </li>
 {% endfor %}
+
+[all articles](/all_articles.html)
 
 [apptree]: http://www.apptreerevolution.com/
 [spreadsheets]: https://success.workiva.com/explore/spreadsheets
