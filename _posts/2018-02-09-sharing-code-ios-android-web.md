@@ -3,7 +3,8 @@ layout: post
 title: Sharing code on iOS, Android and Web
 ---
 
-**Update 2/9/2018:** Watch our talk at DartConf 2018!
+**Update 2/9/2018:** Watch [our talk at DartConf
+2018!](https://www.youtube.com/watch?v=GpLb2XvKv20)
 
 Cross-platform mobile development has been a highly sought-after solution for a
 long time. They historically come with compromises and can’t quite deliver the
