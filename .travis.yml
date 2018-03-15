@@ -3,8 +3,18 @@ rvm:
   - 2.2
 before_install:
   - gem install jekyll bundle sass
+#  - openssl aes-256-cbc -K $encrypted_b1b8ee34d90c_key -iv $encrypted_b1b8ee34d90c_iv -in deploy_key.enc -out ~\/.ssh/deploy_key -d
 env:
   global:
   - GH_REF: github.com/johnpryan/johnpryan.github.com.git
-  - secure: "ZxvJkyYvGwKuqqxU5H2cIg1uZ18STf/3PIOwSujBHDYWBPM9bWLGWYW6tjo9Wh3axEZ9kbVydatG9gPhFlRTwbw2KP91ncVbxLTpNkqg4U/QFUAIVpIcQ/oKsBMR/isBY89WdHdlTuxaLr8VH6N+KM5fRNySGNv7S981LhEPnef1PxIF0LOvjF4BMMKe6nCf4hTMuVa7H8ICv4fEC/a6i0AcU3HsM1WGCx6d/e4wh/2+By3BnpU3wauFESvXvV6xTKF9RGtHn6l8Y/Khxg7VQxb+ToSb0GwYUfls/UKihUNc36I1+boXRdUcWwKVi88ZmM4xL6Ksw2prwzg6TnVzL0U0fLCp5en+Hpa9LOVSazRohhRFNeYvjHChNVt2jS1QH8x6dZ6cbyNW+V+RU+5I7T+IZqE0vTWxvI1SXXXNxOJRuZrYjuh3cMTlZZpaoZMA0AU+P1ShjN7rk/2cps1wVwoJ86eHz71fHWUOBxNhRwsR+Z73AT3AHCdEBi8OcmqW4NZKcTlHEEqmhwyDNxrdKg99UWkf3+5x5F+qsnGUqJZ9xI+QgB1BtUQhlyPgUh1UPeFLjzq7Me4eQqDof1uRUT20NU7CyLLF02XpAmwo9j38ZbIRsQjQ0gIoCzOgRsutgiK5uaZvYKUbQQa3PbseAaztSDarbkUNyeXOv/Ii5m0="
+#  - COMMIT_AUTHOR_EMAIL: john.p.ryan4@gmail.com
 script: bash ./deploy.sh
+deploy:
+  local-dir: _site
+  repo: johnpryan/johnpryan.github.io
+  provider: pages
+  skip-cleanup: true
+  github-token: $GITHUB_TOKEN  # Set in travis-ci.org dashboard, marked secure
+  keep-history: true
+  on:
+    branch: master
