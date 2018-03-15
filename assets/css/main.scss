@@ -2,9 +2,10 @@
 ---
 
 //@import url('https://fonts.googleapis.com/css?family=Inconsolata|PT+Serif:400,700|Source+Sans+Pro');
-@import url('https://fonts.googleapis.com/css?family=Inconsolata|Roboto|Roboto+Slab');
+@import url('https://fonts.googleapis.com/css?family=Crimson+Text');
+@import url('https://fonts.googleapis.com/css?family=Source+Code+Pro:200,300,400,500,600');
 
-  // Reset everything:
+// Reset everything:
 html, body, div, span, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr,
 acronym, address, cite, code, figure, img, ins, q, s, samp, small, strike, sub,
 sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table,
@@ -17,16 +18,20 @@ caption, tbody, tfoot, thead, tr, th, td {
   vertical-align: baseline;
 }
 
-$serif: Georgia, serif;
+$serif: 'Crimson Text', serif;
+;
 $sans: "Helvetica Neue", Arial, sans-serif;
-$mono: 'Inconsolata', Menlo, Courier, monospace;
-$title: Georgia, serif;
+$mono: 'Source Code Pro', Menlo, Courier, monospace;
+$title: 'Crimson Text', serif;
+;
 
 $text-color: #272727;
 $link-color: #4670d8;
+$nav-link-color: lighten(desaturate($link-color, 40%), 20%);
 $link-hover-bg: rgba(129, 132, 206, 0.31);
 $quote-color: #737373;
 $date-color: #666666;
+$copyright-color: lighten($text-color, 60%);
 $inline-code-color: #52bd58;
 $all-articles-color: #00aba5;
 
@@ -41,7 +46,7 @@ $indent: 24px;
 
 $code-padding: 12px;
 $code-border-radius: 8px;
-$code-background-color: #25272f;
+$code-background-color: #faf8f5;
 $code-foreground-color: white;
 
 $table-bg: #ffffff;
@@ -55,7 +60,7 @@ $article-padding: 64px;
 $article-padding-sm: 24px;
 
 body {
-  background-color: rgb(236,236,236);
+  background-color: rgb(236, 236, 236);
 }
 
 p, li {
@@ -66,6 +71,7 @@ p, li {
 article p {
   margin-bottom: 1.5em;
 }
+
 article {
   h1, h2, h3, h4, h5, h6 {
     margin-bottom: 0.5em;
@@ -85,8 +91,7 @@ a {
   border-radius: 4px;
 
   &:hover {
-    background-color: $link-hover-bg;
-    text-decoration: none;
+    text-decoration: underline;
   }
 }
 
@@ -110,6 +115,7 @@ p {
 
 code {
   font-family: $mono;
+  font-weight: 400;
   font-size: 0.9em;
 }
 
@@ -148,15 +154,21 @@ li {
 }
 
 nav {
-  font-family: $sans;
+  font-family: $serif;
   ul {
-    padding-left: $indent;
+    padding-left: 0px;
     list-style: none;
+  }
+  li {
+    margin-top: 0px;
+  }
+  a {
+    color: $nav-link-color;
   }
 }
 
 .post_back {
-  margin-bottom: 3*$margin;
+  margin-bottom: $margin;
 }
 
 .post_date {
@@ -182,10 +194,10 @@ nav {
   }
 }
 
-.footer {
+.copyright {
   font-family: $serif;
   margin-bottom: 32px;
-  font-size: 0.8em;
+  color: $copyright-color;
 }
 
 article {
@@ -249,26 +261,37 @@ article, nav {
 
 // Grid
 .column {
-  max-width: 1280px;
-  margin: 0 auto;
+  margin-left: auto;
+  margin-right: auto;
   padding: 16px;
+  justify-content: center;
 
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+  grid-template-areas:
+          "spacer article nav";
+  grid-gap: 10px;
+
   article {
-    flex: 1;
-    max-width: 640px;
+    grid-area: article;
+    max-width:640px;
   }
   nav {
+    grid-area: nav;
     padding: 16px;
-    width: 320px;
+    margin-left: 0px;
   }
 }
 
-@media only screen and (max-width: 960px) {
+@media only screen and (max-width: 900px) {
   .column {
-    display: block;
+    grid-template-columns: 1fr;
+    grid-template-areas: "article" "nav";
   }
   article {
-    padding: $article-padding-sm;
+    max-width:640px;
+    padding: 32px;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
