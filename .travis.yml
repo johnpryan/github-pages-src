@@ -9,9 +9,10 @@ env:
   - secure: "Rs9hA3lBzNSbIIpCnIFuNkou0r3VUeiFI1zAdd6nkxA/x2BJ81lxV+nJ5dKOBB9rDl5Xc7nTxZy/3KCmr+2V21mijdUUZc8Iz+uuGVUU3AePc73ETTLSx3YSFLsNGGxtwwd4DvEY/XokCpvkpFxbLIjToSkC73nP4pduZMkB16sPJbaReBMetMyC2mFrdonR1v0JPXfEgWcQX50Ig4a3aqd18FXFpCiw4a7Gt2UehzLQLxdWuWC1U8Ra3ru4QlzAUzeba3kFWtn0KkjO2PkZs95hCEQomRerIu+ndyb0nCGUS5gikikRRLvMSsFKSr4ZaXIY4lwgMYsnc+1mjUDBgl/VRMJN5DW2qK712ouiE2Y9KlDUrYSo6Frt1mlVfNqMscoZSZ2B3X9BbXrfTPbuDvUJaQoXQL70tmL4wRJkEGWkGxWbBwWM712cbzmqjGqSugoKGJy30XcPBGEjycJQZ0dOyE8esmRc79qQYk8qEVpGxjliOvqWdfEAPuQCrw3cvlHqd9/8r0VcGUjDYcmiZXzRWedpaVT3z1Jq5N8iiAbep+An4kb7xODNDiMI1DvlrIYjSAYQAUA6+mnVu1jGcU6Pem6JckhykHtXfqGKlWtNmLo+cVVfSSmaJbuajTXMP3WmtpQ5WwjM2xIYlbIOYbD+x0oDickBEgL2jpnLVhE="
 script: bash ./deploy.sh
 deploy:
-  local-dir: _site
-  target-branch: master
+  fqdn: jpryan.me
   repo: johnpryan/johnpryan.github.com
+  target-branch: master
+  local-dir: _site
   provider: pages
   skip-cleanup: true
   github-token: $GITHUB_TOKEN

@@ -7,4 +7,4 @@ John Ryan's github pages site
 This uses [domenic's travis ci
 instructions](https://gist.github.com/domenic/ec8b0fc8ab45f39403dd) for
 automatic deployment to GitHub Pages.
-
+This uses [Travis CI's Pages deployment support](https://docs.travis-ci.com/user/deployment/pages/)
