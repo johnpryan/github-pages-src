@@ -1,3 +1,7 @@
+---
+layout: default
+---
+
 ## Privacy Policy
 
 John Ryan built the InfiniList app as a Commercial app. This SERVICE is provided
