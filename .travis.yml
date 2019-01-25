@@ -2,7 +2,7 @@ language: ruby
 rvm:
   - 2.2
 before_install:
-  - gem install jekyll bundle sass
+  - gem install jekyll bundle sassc
 env:
   global:
   - GH_REF: github.com/johnpryan/johnpryan.github.com.git
