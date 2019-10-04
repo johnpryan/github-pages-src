@@ -3,7 +3,7 @@ layout: about
 ---
 
 My name is John Ryan, and right now I'm building software, 
-writing music, climbing rocks, and exploring the pacific northwest.
+writing music, climbing rocks, and exploring the Bay Area.
 I'm [jryanio](http://twitter.com/jryanio) on Twitter and [johnpryan](http://github.com/johnpryan) on GitHub.
 
 Current whereabouts: San Francisco Bay Area
