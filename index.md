@@ -2,14 +2,15 @@
 layout: about
 ---
 
-My name is John Ryan, and right now I'm building software, writing music, rock
-climbing, and exploring the pacific northwest.
+My name is John Ryan, and right now I'm building software, 
+writing music, climbing rocks, and exploring the pacific northwest.
 I'm [jryanio](http://twitter.com/jryanio) on Twitter and [johnpryan](http://github.com/johnpryan) on GitHub.
 
-Current whereabouts: Portland, OR
+Current whereabouts: San Francisco Bay Area
 
 ## Projects
 
+- [Dart][dart] and [Flutter][flutter] developer relations at Google
 - [AppTree][apptree]'s web and flutter applications
 - [Spreadsheets][spreadsheets], Workiva's next-generation spreadsheet software
 - [flutter_map][flutter-map], a map widget for Flutter
@@ -37,6 +38,8 @@ Current whereabouts: Portland, OR
 
 [all articles](/all_articles.html)
 
+[dart]: https://dart.dev
+[flutter]: https://flutter.dev
 [apptree]: http://www.apptreerevolution.com/
 [spreadsheets]: https://success.workiva.com/explore/spreadsheets
 [tavern]: https://github.com/johnpryan/tavern
