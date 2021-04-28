@@ -1,10 +1,1 @@
-John Ryan's github pages site
-
-[![Build Status](https://travis-ci.org/johnpryan/github-pages-src.svg?branch=master)](https://travis-ci.org/johnpryan/github-pages-src)
-
-## Travis CI
-
-This uses [domenic's travis ci
-instructions](https://gist.github.com/domenic/ec8b0fc8ab45f39403dd) for
-automatic deployment to GitHub Pages.
-This uses [Travis CI's Pages deployment support](https://docs.travis-ci.com/user/deployment/pages/)
+Source for my personal website at [jpryan.me](http://jpryan.me/)
