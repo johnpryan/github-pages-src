@@ -1,0 +1,91 @@
+@import url("https://fonts.googleapis.com/css?family=Crimson+Text");
+@import url("https://fonts.googleapis.com/css?family=Source+Code+Pro:200,300,400,500,600");
+html, body, div, span, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, cite, code, figure, img, ins, q, s, samp, small, strike, sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td { margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align: baseline; }
+
+body { background-color: #ececec; }
+
+p, li { font-size: 18px; line-height: 1.5em; }
+
+article p { margin-bottom: 0.8em; }
+
+article h1, article h2, article h3, article h4, article h5, article h6 { margin-bottom: 0.5em; }
+
+h1, h2, h3, h4, h5, h6 { font-family: "Crimson Text", serif; margin-bottom: 0.5em; }
+
+a { color: #4670d8; font-family: "Crimson Text", serif; text-decoration: none; padding: 2px 4px 2px 4px; border-radius: 4px; }
+
+a:hover { text-decoration: underline; }
+
+img { max-width: 90%; border-radius: 8px; }
+
+p code { background-color: #f2f2f2; border: 1px solid #c8c8c8; padding: 2px; border-radius: 4px; color: #52bd58; margin-left: 2px; margin-right: 2px; }
+
+code { font-family: "Source Code Pro", Menlo, Courier, monospace; font-weight: 400; font-size: 0.9em; }
+
+pre { overflow: scroll; padding: 12px; background: #faf8f5; color: white; border-radius: 8px; margin-bottom: 0.5em; }
+
+pre code { border: 0px; margin: 0px; }
+
+h1 { font-size: 2.25em; }
+
+h2 { font-size: 1.75em; }
+
+h3 { font-size: 1.25em; }
+
+ul, ol { padding-left: 24px; margin-bottom: 0.5em; }
+
+li { margin-top: 0.5em; }
+
+nav { font-family: "Crimson Text", serif; }
+
+nav ul { padding-left: 0px; list-style: none; }
+
+nav li { margin-top: 0px; }
+
+nav a { color: #7994d8; }
+
+.post_back { margin-bottom: 0.5em; }
+
+.post_date { font-family: "Crimson Text", serif; color: #666666; display: inline-block; }
+
+.post_date p { margin-bottom: 0.5em; }
+
+.all_articles { display: table; }
+
+.all_articles li { display: table-row; list-style: none; }
+
+.all_articles .date, .all_articles a { display: table-cell; min-width: 96px; }
+
+.copyright { font-family: "Crimson Text", serif; margin-bottom: 32px; color: silver; }
+
+article { background-color: white; box-shadow: 0px 0px 15px 1px #bbbbbb; padding: 32px; overflow: hidden; font-family: "Crimson Text", serif; }
+
+blockquote { padding-left: 24px; border-left: 5px solid #4670d8; }
+
+blockquote p { color: #737373; }
+
+.date { font-family: "Crimson Text", serif; font-size: 0.8em; color: #666666; margin-left: 8px; }
+
+table { margin-bottom: 0.5em; width: 100%; color: #565656; border-collapse: collapse; overflow-x: scroll; }
+
+table tr { border-top: 1px solid #ccc; border-spacing: 0px; }
+
+table td, table th { font: "Crimson Text", serif; padding: 6px 13px; border: 1px solid #ccc; }
+
+table thead { color: #272727; font-weight: 600; }
+
+table tbody tr:nth-child(odd) { background: #F6F6F6; }
+
+article, nav { margin: 8px; }
+
+.section { margin-bottom: 0.5em; }
+
+.column { margin-left: auto; margin-right: auto; padding: 16px; justify-content: center; display: grid; grid-template-columns: 1fr 3fr 1fr; grid-template-areas: "spacer article nav"; grid-gap: 10px; }
+
+.column article { grid-area: article; max-width: 640px; }
+
+.column nav { grid-area: nav; padding: 16px; margin-left: 0px; }
+
+@media only screen and (max-width: 900px) { .column { grid-template-columns: 1fr; grid-template-areas: "article" "nav"; } article { max-width: 640px; padding: 32px; } }
+
+/*# sourceMappingURL=main.css.map */

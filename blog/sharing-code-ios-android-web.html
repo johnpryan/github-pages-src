@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    
+        <title>Sharing code on iOS, Android and Web</title>
+    
+
+    <meta name="description" content="a journal">
+
+    
+
+    <link rel="icon" href="/assets/img/favicon.png">
+    <link rel="stylesheet" href="/assets/css/color-brewer.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/main.css">
+
+    <script src="/assets/js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+</head>
+
+<body>
+
+<div class="column">
+    <article>
+        <div class="post">
+	<div class="post_back">
+    	<a href="/all_articles.html">« all articles</a>
+    </div>
+    <div class="post_title">
+    	<h1>Sharing code on iOS, Android and Web</h1>
+    </div>
+    <div class="post_date">
+    	<p>February 9, 2018</p>
+    </div>
+    <div class="post_content"?>
+        <p><strong>Update 2/9/2018:</strong> Watch <a href="https://www.youtube.com/watch?v=GpLb2XvKv20">our talk at DartConf
+2018!</a></p>
+
+<p>Cross-platform mobile development has been a highly sought-after solution for a
+long time. They historically come with compromises and can’t quite deliver the
+same experience as a native app. But now we are convinced that this vision is a
+reality. Flutter allows us to build fast, native mobile apps and share 70% of
+our Dart code across iOS, Android, and the web.
+There are many tactics for making code reusable. Most of these focus on reusing
+code within the same app or project. We focused on following these three rules:</p>
+
+<ul>
+  <li>Use Layers</li>
+  <li>Simple Views</li>
+  <li>Inject Dependencies</li>
+</ul>
+
+<h2 id="use-layers">Use Layers</h2>
+
+<p>Layering is a very common technique for breaking apart a complicated app. In the
+context of client-side applications, the views and services are decoupled from
+the rest of the application:</p>
+
+<p>Using layers in your appEach layer is decoupled from the others by library. For
+example, the Services layer never imports a controller. It’s job is only to
+provide an api for higher layers. The idea is that layers only access the layer
+directly below it.</p>
+
+<p>Services are typically classes that interact a remote server, or the platform.
+Firebase, JSON / HTTP services, Websockets, filesystem access, etc are all
+examples of a service.</p>
+
+<p>The Controller layer contains your app’s important domain-specific code. It does
+not necessarily mean to use a controller class. In fact, this layer can be
+completely replaced with other patterns (Redux, Flux, or any other *Ux.) The
+important thing is that the Views and Services are treated as abstract
+interfaces.</p>
+
+<p>The Views are where widgets (Flutter) and components (web) are defined.
+Typically, the controller is interacting with a Component (Web) or Widget
+(Flutter) that implements an abstract interface:</p>
+
+<div class="language-dart highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">MyView</span> <span class="o">{</span>
+ <span class="n">Stream</span><span class="o">&lt;</span><span class="n">Event</span><span class="o">&gt;</span> <span class="kd">get</span> <span class="n">onEvent</span><span class="o">;</span>
+ <span class="kt">void</span> <span class="n">render</span><span class="o">(</span><span class="n">State</span> <span class="n">state</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>This allows Flutter and Web apps to know what API the controller layer is
+expecting from it’s view.</p>
+
+<p>There are different patterns for the Controller-View relationship, but typically
+there is a 1-to-1 relationship with the controller. Views can be independent of
+their controller (simple), or treat their controller as a Presenter (smart).</p>
+
+<p>Caveat: There are use-cases that don’t lend themselves to this layered
+architecture. For example, a map. It makes much more sense to make the Views
+(implemented in both Flutter or Web) responsible for their own “service” for
+displaying a map. On Flutter, it would be a Widget using a Plugin
+(package:map_view) and an HTML library on web (package:google_maps).</p>
+
+<h1 id="remove-viewlogic">Remove View Logic</h1>
+<p>Traditionally, views are platform-specific. Even if you are only building a
+Flutter app, you may want:</p>
+
+<ul>
+  <li>Fast unit tests</li>
+  <li>To build command-line tools for interacting with services</li>
+  <li>A cleaner library and package structure</li>
+</ul>
+
+<p>Once the important code is moved out, it becomes possible to run tests.
+Sometimes, platform-specific libraries will be accidentally moved into the
+controller layer. A quick strategy for diagnosing this problem is to write test
+that only runs on the VM:</p>
+
+<div class="language-dart highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@TestOn</span><span class="o">(</span><span class="s">"vm"</span><span class="o">)</span>
+<span class="kn">library</span> <span class="n">controller_test</span><span class="o">;</span>
+<span class="kn">import</span> <span class="s">'package:myapp/controllers.dart'</span><span class="o">;</span>
+<span class="kn">import</span> <span class="s">'package:test/test.dart'</span><span class="o">;</span>
+<span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="o">)</span> <span class="o">{</span>
+ <span class="n">group</span><span class="o">(</span><span class="s">"controller"</span><span class="o">,</span> <span class="o">()</span> <span class="o">{</span>
+   <span class="n">test</span><span class="o">(</span><span class="s">"is pure dart"</span><span class="o">,</span> <span class="o">()</span> <span class="o">{</span>
+     <span class="kd">var</span> <span class="n">controller</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AppController</span><span class="o">();</span>
+   <span class="o">});</span>
+ <span class="o">});</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>Then finding the culprit becomes easy:</p>
+
+<p><img src="/assets/img/code-sharing-1.png" alt="the culprit" /></p>
+
+<h2 id="inject-dependencies">Inject Dependencies</h2>
+<p>Services may need to use different implementations on each platform. Say we had
+a service and a cache:</p>
+
+<div class="language-dart highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">MyService</span> <span class="o">{</span>
+  <span class="n">Future</span><span class="o">&lt;</span><span class="n">MyData</span><span class="o">&gt;</span> <span class="n">fetchData</span><span class="o">();</span>
+<span class="o">}</span>
+<span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">MyCache</span> <span class="o">{</span>
+  <span class="kt">void</span> <span class="n">cacheData</span><span class="o">(</span><span class="n">MyData</span> <span class="n">data</span><span class="o">);</span>
+<span class="o">}</span> 
+<span class="kd">class</span> <span class="nc">AppController</span> <span class="o">{</span>
+  <span class="kd">final</span> <span class="n">MyService</span> <span class="n">_service</span><span class="o">;</span>
+  <span class="kd">final</span> <span class="n">MyCache</span> <span class="n">_cache</span><span class="o">;</span>
+  
+  <span class="n">AppController</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">_service</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="na">_cache</span><span class="o">);</span>
+  <span class="c1">//...</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>Now each entrypoint has a well-defined API for creating the AppController with
+the platform-specific dependencies. The Flutter app would import and inject a
+FlutterService and the Web app would import and inject a BrowserService.</p>
+
+<h2 id="example">Example</h2>
+<p>At AppTree, we make mobile and web solutions for enterprise problems. Our users
+have beautiful apps to work with their CRM, get their daily work done for
+universities like Stanford, and more. But there’s one problem that can waste a
+lot of time: deciding where to get lunch.</p>
+
+<h2 id="lets-vote">Let’s Vote</h2>
+<p>Our solution is an app called Let’s Vote. It will allow anyone to create an
+election and submit an idea they think should win. Once the creator closes the
+polls, it will display a winner. It will to display different pages:</p>
+
+<div class="language-dart highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">enum</span> <span class="n">Page</span> <span class="o">{</span>
+  <span class="n">home</span><span class="o">,</span> <span class="c1">// create or join</span>
+  <span class="n">create</span><span class="o">,</span> <span class="c1">// enter topic</span>
+  <span class="n">joining</span><span class="o">,</span> <span class="c1">// enter id (skipped if using create)</span>
+  <span class="n">username</span><span class="o">,</span> <span class="c1">// enter username</span>
+  <span class="n">ideaSubmission</span><span class="o">,</span> <span class="c1">// enter an candidate</span>
+  <span class="n">ballot</span><span class="o">,</span> <span class="c1">// display each candidate (idea) and pick one</span>
+  <span class="n">waitingForVotes</span><span class="o">,</span> <span class="c1">// wait for the polls to close</span>
+  <span class="n">result</span><span class="o">,</span> <span class="c1">// show the winner</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="code-organization">Code Organization</h2>
+<p>Our project needs three packages:</p>
+
+<ul>
+  <li>letsvote: All platform-independent code (controllers, models, services,
+interfaces) goes here</li>
+  <li>letsvote_moble</li>
+  <li>letsvote_web: the web app, including the Dart server hosting it. The server
+includes a REST API for the web and mobile app to use.</li>
+</ul>
+
+<p>Both the web and mobile packages import letsvote using the path keyword in
+pubspec.yaml:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">dependencies</span><span class="pi">:</span>
+  <span class="na">letsvote</span><span class="pi">:</span>
+    <span class="na">path</span><span class="pi">:</span> <span class="s">../letsvote</span>
+</code></pre></div></div>
+
+<h2 id="basic-types">Basic Types</h2>
+<p>First, we need to define a few basic types:</p>
+
+<ul>
+  <li>Election: The parent object containing all information about an election that
+a group of voters are participating in.</li>
+  <li>Voter: a user with a unique name voting in an Election</li>
+  <li>Idea: Something voters can vote for.</li>
+</ul>
+
+<p>Each class can use JsonSerializable to generate toJson() methods automatically:</p>
+
+<div class="language-dart highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@JsonSerializable</span><span class="o">()</span>
+<span class="kd">class</span> <span class="nc">Election</span> <span class="kd">extends</span> <span class="n">_$ElectionSerializerMixin</span> <span class="o">{</span>
+  <span class="kd">final</span> <span class="kt">String</span> <span class="n">id</span><span class="o">;</span>
+  <span class="kd">final</span> <span class="kt">String</span> <span class="n">topic</span><span class="o">;</span>
+  <span class="kd">final</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Voter</span><span class="o">&gt;</span> <span class="n">voters</span><span class="o">;</span>
+  <span class="kd">final</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Idea</span><span class="o">&gt;</span> <span class="n">ideas</span><span class="o">;</span>
+  <span class="kt">bool</span> <span class="n">pollsOpen</span><span class="o">;</span>
+  <span class="n">Election</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">id</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="na">topic</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="na">voters</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="na">ideas</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="na">pollsOpen</span><span class="o">);</span>
+  <span class="kd">factory</span> <span class="n">Election</span><span class="o">.</span><span class="na">fromJson</span><span class="o">(</span><span class="n">json</span><span class="o">)</span> <span class="o">=&gt;</span> <span class="n">_$ElectionFromJson</span><span class="o">(</span><span class="n">json</span><span class="o">);</span>
+<span class="o">}</span>
+<span class="nd">@JsonSerializable</span><span class="o">()</span>
+<span class="kd">class</span> <span class="nc">Voter</span> <span class="kd">extends</span> <span class="n">_$VoterSerializerMixin</span> <span class="o">{</span>
+  <span class="kd">final</span> <span class="kt">String</span> <span class="n">name</span><span class="o">;</span>
+  <span class="n">Voter</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">name</span><span class="o">);</span>
+  <span class="kd">factory</span> <span class="n">Voter</span><span class="o">.</span><span class="na">fromJson</span><span class="o">(</span><span class="n">json</span><span class="o">)</span> <span class="o">=&gt;</span> <span class="n">_$VoterFromJson</span><span class="o">(</span><span class="n">json</span><span class="o">);</span>
+<span class="o">}</span>
+<span class="nd">@JsonSerializable</span><span class="o">()</span>
+<span class="kd">class</span> <span class="nc">Idea</span> <span class="kd">extends</span> <span class="n">_$IdeaSerializerMixin</span> <span class="o">{</span>
+  <span class="kd">final</span> <span class="kt">String</span> <span class="n">name</span><span class="o">;</span>
+  <span class="kd">final</span> <span class="kt">String</span> <span class="n">authorName</span><span class="o">;</span>
+  <span class="kt">int</span> <span class="n">votes</span><span class="o">;</span>
+  <span class="n">Idea</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">name</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="na">authorName</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="na">votes</span><span class="o">);</span>
+  <span class="kd">factory</span> <span class="n">Idea</span><span class="o">.</span><span class="na">fromJson</span><span class="o">(</span><span class="n">json</span><span class="o">)</span> <span class="o">=&gt;</span> <span class="n">_$IdeaFromJson</span><span class="o">(</span><span class="n">json</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="http-api">HTTP API</h2>
+<p>The API for our server is a REST api built using shelf:</p>
+
+<div class="language-dart highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">configureRoutes</span><span class="p">(</span><span class="n">Router</span> <span class="n">router</span><span class="o">)</span> <span class="o">{</span>
+  <span class="n">router</span><span class="o">.</span><span class="na">post</span><span class="o">(</span><span class="s">"/election"</span><span class="o">,</span> <span class="n">handleCreate</span><span class="o">);</span>
+  <span class="n">router</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">"/election/{id}"</span><span class="o">,</span> <span class="n">handleGet</span><span class="o">);</span>
+  <span class="n">router</span><span class="o">.</span><span class="na">post</span><span class="o">(</span><span class="s">"/election/{id}/user"</span><span class="o">,</span> <span class="n">handleJoin</span><span class="o">);</span>
+  <span class="n">router</span><span class="o">.</span><span class="na">post</span><span class="o">(</span><span class="s">"/election/{id}/idea"</span><span class="o">,</span> <span class="n">handleSubmitIdea</span><span class="o">);</span>
+  <span class="n">router</span><span class="o">.</span><span class="na">post</span><span class="o">(</span><span class="s">"/election/{id}/vote"</span><span class="o">,</span> <span class="n">handleVote</span><span class="o">);</span>
+  <span class="n">router</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"/election/{id}/close"</span><span class="o">,</span> <span class="n">handleClose</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="the-servicelayer">The Service Layer</h2>
+<p>These requests are defined as package:http requests in the requests library:</p>
+<div class="language-dart highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="s">'dart:convert'</span><span class="o">;</span>
+<span class="kn">import</span> <span class="s">'package:http/http.dart'</span><span class="o">;</span>
+<span class="kn">import</span> <span class="s">'package:letsvote/model.dart'</span><span class="o">;</span>
+<span class="kd">class</span> <span class="nc">JsonRequest</span> <span class="kd">extends</span> <span class="n">Request</span> <span class="o">{</span>
+  <span class="n">JsonRequest</span><span class="o">(</span><span class="kt">String</span> <span class="n">method</span><span class="o">,</span> <span class="n">Uri</span> <span class="n">uri</span><span class="o">)</span> <span class="o">:</span> <span class="k">super</span><span class="o">(</span><span class="n">method</span><span class="o">,</span> <span class="n">uri</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">headers</span><span class="o">[</span><span class="s">'Content-Type'</span><span class="o">]</span> <span class="o">=</span> <span class="s">'application/json'</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+<span class="kd">class</span> <span class="nc">CreateElection</span> <span class="kd">extends</span> <span class="n">JsonRequest</span> <span class="o">{</span>
+  <span class="n">CreateElection</span><span class="o">(</span><span class="n">Uri</span> <span class="n">host</span><span class="o">,</span> <span class="kt">String</span> <span class="n">topic</span><span class="o">)</span> <span class="o">:</span> <span class="k">super</span><span class="o">(</span><span class="s">'POST'</span><span class="o">,</span> <span class="n">_createUri</span><span class="o">(</span><span class="n">host</span><span class="o">))</span> <span class="o">{</span>
+    <span class="n">body</span> <span class="o">=</span> <span class="n">JSON</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="k">new</span> <span class="n">CreateElectionRequest</span><span class="o">(</span><span class="n">topic</span><span class="o">));</span>
+  <span class="o">}</span>
+  
+  <span class="kd">static</span> <span class="n">Uri</span> <span class="n">_createUri</span><span class="o">(</span><span class="n">Uri</span> <span class="n">host</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">host</span><span class="o">.</span><span class="na">replace</span><span class="o">(</span><span class="nl">path:</span> <span class="s">'election'</span><span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>The Dart client has types for each request and response. Each request is sent
+using a Requester (pub package):</p>
+
+<div class="language-dart highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// letsvote/lib/services.dart</span>
+<span class="n">Future</span><span class="o">&lt;</span><span class="n">Election</span><span class="o">&gt;</span> <span class="n">create</span><span class="o">(</span><span class="kt">String</span> <span class="n">topic</span><span class="o">)</span> <span class="n">async</span> <span class="o">{</span>
+  <span class="kd">var</span> <span class="n">request</span> <span class="o">=</span> <span class="k">new</span> <span class="n">requests</span><span class="o">.</span><span class="na">CreateElection</span><span class="o">(</span><span class="n">host</span><span class="o">,</span> <span class="n">topic</span><span class="o">);</span>
+  <span class="kd">var</span> <span class="n">response</span> <span class="o">=</span> <span class="n">await</span> <span class="n">requester</span><span class="o">.</span><span class="na">send</span><span class="o">(</span><span class="n">request</span><span class="o">);</span>
+  <span class="k">return</span> <span class="k">new</span> <span class="n">Election</span><span class="o">.</span><span class="na">fromJson</span><span class="o">(</span><span class="n">JSON</span><span class="o">.</span><span class="na">decode</span><span class="o">(</span><span class="n">response</span><span class="o">.</span><span class="na">body</span><span class="o">));</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="the-controller-layer">The Controller Layer</h2>
+<p>Our app needs an AppController to manage the state for our current user. It
+needs to store:</p>
+
+<ul>
+  <li>The last known state of the election (the Election class)</li>
+  <li>The current Page</li>
+  <li>The unique username of the current voter</li>
+  <li>The abstract AppView to update when the state changes</li>
+</ul>
+
+<p>This layer is built using an MVP-style but could use Redux, Flux, or other
+patterns to manage state and update the view.</p>
+
+<h2 id="the-viewlayer">The View Layer</h2>
+
+<p>In this example, our View implemented has access to the controller and can
+access it’s public API to determine how it should render. To wire up this
+relationship, we use AppController.init():</p>
+
+<div class="language-dart highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Future</span> <span class="nf">init</span><span class="p">(</span><span class="n">AppView</span> <span class="n">view</span><span class="o">)</span> <span class="n">async</span> <span class="o">{</span>
+    <span class="c1">// ...</span>
+    <span class="n">_view</span> <span class="o">=</span> <span class="n">view</span><span class="o">;</span>
+    <span class="n">_view</span><span class="o">.</span><span class="na">controller</span> <span class="o">=</span> <span class="k">this</span><span class="o">;</span>
+    <span class="c1">// ...</span>
+  <span class="o">}</span>
+</code></pre></div></div>
+
+<p>Each “view” in flutter accesses the controller’s API to inform it the user is
+interacting with the app:</p>
+<div class="language-dart highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">HomePage</span> <span class="kd">extends</span> <span class="n">StatelessWidget</span> <span class="o">{</span>
+  <span class="kd">final</span> <span class="n">AppController</span> <span class="n">_controller</span><span class="o">;</span>
+  <span class="n">HomePage</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">_controller</span><span class="o">);</span>
+  <span class="n">Widget</span> <span class="n">build</span><span class="o">(</span><span class="n">BuildContext</span> <span class="n">context</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="n">Column</span><span class="o">(</span>
+      <span class="nl">mainAxisAlignment:</span> <span class="n">MainAxisAlignment</span><span class="o">.</span><span class="na">center</span><span class="o">,</span>
+      <span class="nl">children:</span> <span class="o">&lt;</span><span class="n">Widget</span><span class="o">&gt;[</span>
+        <span class="k">new</span> <span class="n">Text</span><span class="o">(</span><span class="s">"Let's Vote!"</span><span class="o">),</span>
+        <span class="k">new</span> <span class="n">Text</span><span class="o">(</span><span class="s">"Create a new vote or join an existing vote"</span><span class="o">),</span>
+        <span class="k">new</span> <span class="n">MaterialButton</span><span class="o">(</span>
+          <span class="nl">child:</span> <span class="k">new</span> <span class="n">Text</span><span class="o">(</span><span class="s">"Create"</span><span class="o">),</span>
+          <span class="nl">onPressed:</span> <span class="o">()</span> <span class="o">=&gt;</span> <span class="n">_controller</span><span class="o">.</span><span class="na">startByCreating</span><span class="o">(),</span>
+        <span class="o">),</span>
+        <span class="k">new</span> <span class="n">MaterialButton</span><span class="o">(</span>
+          <span class="nl">child:</span> <span class="k">new</span> <span class="n">Text</span><span class="o">(</span><span class="s">"Join"</span><span class="o">),</span>
+          <span class="nl">onPressed:</span> <span class="o">()</span> <span class="o">=&gt;</span> <span class="n">_controller</span><span class="o">.</span><span class="na">startByJoining</span><span class="o">(),</span>
+        <span class="o">),</span>
+      <span class="o">],</span>
+    <span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>startByCreating and startByJoining have different implementations that result in
+updating the state of the Controller (the page) and possibly making requests.</p>
+
+<p>It’s worth mentioning that this relationship could be implemented differently:</p>
+
+<ul>
+  <li>Each view could have an abstract interface for it’s controller</li>
+  <li>Each view could emit events on a Stream that the controller listens to</li>
+</ul>
+
+<h2 id="the-app">The App</h2>
+
+<ul>
+  <li><a href="https://letsvote-dart.herokuapp.com/">https://letsvote-dart.herokuapp.com/</a></li>
+  <li><a href="https://github.com/apptreesoftware/letsvote">https://github.com/apptreesoftware/letsvote</a></li>
+</ul>
+
+<h2 id="closing-thoughts">Closing thoughts</h2>
+<p>We’ve found that using layers, simplifying views, and injecting dependencies
+allows us to share the most code between our Flutter app and web app. We
+calculate we are shaing 70% of our code (we include unit tests in this
+calculation) across all three platforms. But it’s not the amount of sharing,
+it’s what is being shared. Our apps share most critical code, the “brain” of our
+app. Instead of each platform being ahead or behind the others, all of our apps
+are up to date. Each person is focused on new features and improvements, not
+re-implementing existing work for another platform.</p>
+
+<h2 id="faq">FAQ</h2>
+
+<h3 id="intellij-setup">IntelliJ Setup</h3>
+<p>IntelliJ can support a Dart project with multiple packages using modules. To set
+up three different modules:</p>
+
+<ul>
+  <li>Open project settings (cmd+;)</li>
+  <li>Go to Modules</li>
+  <li>select letsvote_mobile.iml</li>
+  <li>select letsvote_server.iml</li>
+  <li>select letsvote_web.iml</li>
+</ul>
+
+<p>Then go to Preferences and re-select your Flutter SDK if it is not selected.</p>
+
+<h3 id="heroku-setup">Heroku Setup</h3>
+<p>This project can run on heroku.
+Specify this buildpack https://github.com/johnpryan/heroku-buildpack-dart ,
+which supports a special flag for specifying the Dart build directory.</p>
+
+<ul>
+  <li>set DART_BUILD_DIR_OVERRIDE to letsvote_web</li>
+  <li>set DART_SDK_URL to
+https://storage.googleapis.com/dart-archive/channels/stable/release/latest/sdk/dartsdk-linux-x64-release.zip</li>
+  <li>set PATH to /app/bin:/usr/local/bin:/usr/bin:/bin:/app/dart-sdk/bin</li>
+</ul>
+
+<h3 id="what-aboutrouting">What about routing?</h3>
+<p>This app doesn’t use Flutter or Browser-based routing. It might be possible to
+build a shared abstraction for flutter’s Navigator and route_hierarchical. But
+more likely the solution will involve some custom code for each platform.</p>
+
+
+    </div>
+</div>
+
+    </article>
+    <nav>
+    <div class="section">
+        <p><strong>John Ryan</strong></p>
+        <ul>
+            
+            <li>
+                <a href="/">home</a>
+            </li>
+            
+            <li>
+                <a href="https://github.com/johnpryan">github</a>
+            </li>
+            
+            <li>
+                <a href="https://twitter.com/jryanio">twitter</a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="section">
+        <p><strong>Articles</strong></p>
+        <ul>
+            
+            <li>
+                <a href="/blog/sharing-code-ios-android-web">Sharing code on iOS, Android and Web</a>
+            </li>
+            
+            <li>
+                <a href="/blog/dart-developer-summit">Dart Summit 2015</a>
+            </li>
+            
+            <li>
+                <a href="/blog/switching-to-dart">Switching To Dart</a>
+            </li>
+            
+            <li><a class="all_articles_link" href="/all_articles.html">All Articles</a></li>
+        </ul>
+    </div>
+    <div class="copyright">
+        &copy; 2021 John Ryan
+    </div>
+</nav>
+</div>
+</body>
+
+</html>

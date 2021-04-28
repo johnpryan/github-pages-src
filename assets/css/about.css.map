@@ -1,0 +1,12 @@
+{
+	"version": 3,
+	"file": "about.css",
+	"sources": [
+		"about.scss"
+	],
+	"sourcesContent": [
+		"@import url('https://fonts.googleapis.com/css?family=Source+Code+Pro:200,300,400,500,600');\n\n$bg-1: #2a2c35;\n$bg-2: #2e2435;\n$bg-3: #35302a;\n$bg-4: #352431;\n\nbody {\n  background-color: #2a2c35;\n  color: #ddd;\n  font: normal normal normal 11pt/1.6em \"Source Code Pro\", menlo, dejavu sans mono, bitstream vera sans mono, panic sans, droid sans mono, monospace;\n  margin: 0;\n  animation: bgtetrad 15s linear infinite alternate;\n  -webkit-animation: bgtetrad 15s linear infinite alternate\n}\n\n\n\n@keyframes bgtetrad {\n  0% {\n    background-color: $bg-1;\n  }\n  25% {\n    background-color: $bg-2;\n  }\n  50% {\n    background-color: $bg-3;\n  }\n  75% {\n    background-color: $bg-4;\n  }\n}\n\n#content {\n  min-width: 30ex;\n  max-width: 80ex;\n  margin: 1em;\n\n  color: #c1c1c1;\n}\n\na:link, a:hover, a:active, a:visited {\n  color: #ffffff;\n}\n\nul {\n  list-style-type: square;\n  padding-left: 1em;\n}\n\nh1, h2, h3, h4, h5 {\n  color: #ffffff;\n  font-size: inherit;\n  font-weight: 700;\n  margin: 1em 0 0\n}\n\nhr {\n  margin: 1ex 0;\n  border: 1px solid #999\n}\n\npre {\n  margin-left: 2em;\n  font: inherit\n}\n\ncode {\n  font: inherit;\n  color: #cea;\n  margin-left: 0\n}\n"
+	],
+	"names": [],
+	"mappings": "AAAA,OAAO,CAAC,kFAAI;AAOZ,AAAA,IAAI,CAAC,EACH,gBAAgB,EAAE,OAAO,EACzB,KAAK,EAAE,IAAI,EACX,IAAI,EAAE,4IAA4I,EAClJ,MAAM,EAAE,CAAC,EACT,SAAS,EAAE,sCAAsC,EACjD,iBAAiB,EAAE,sCACrB,GAAC;;AAID,UAAU,CAAV,QAAU,GACR,EAAE,GACA,gBAAgB,EAlBb,OAAO;EAoBZ,GAAG,GACD,gBAAgB,EApBb,OAAO;EAsBZ,GAAG,GACD,gBAAgB,EAtBb,OAAO;EAwBZ,GAAG,GACD,gBAAgB,EAxBb,OAAO;;AA4Bd,AAAA,QAAQ,CAAC,EACP,SAAS,EAAE,IAAI,EACf,SAAS,EAAE,IAAI,EACf,MAAM,EAAE,GAAG,EAEX,KAAK,EAAE,OAAO,GACf;;AAED,AAAA,CAAC,CAAC,IAAI,EAAE,CAAC,CAAC,KAAK,EAAE,CAAC,CAAC,MAAM,EAAE,CAAC,CAAC,OAAO,CAAC,EACnC,KAAK,EAAE,OAAO,GACf;;AAED,AAAA,EAAE,CAAC,EACD,eAAe,EAAE,MAAM,EACvB,YAAY,EAAE,GAAG,GAClB;;AAED,AAAA,EAAE,EAAE,EAAE,EAAE,EAAE,EAAE,EAAE,EAAE,EAAE,CAAC,EACjB,KAAK,EAAE,OAAO,EACd,SAAS,EAAE,OAAO,EAClB,WAAW,EAAE,GAAG,EAChB,MAAM,EAAE,OACV,GAAC;;AAED,AAAA,EAAE,CAAC,EACD,MAAM,EAAE,KAAK,EACb,MAAM,EAAE,cACV,GAAC;;AAED,AAAA,GAAG,CAAC,EACF,WAAW,EAAE,GAAG,EAChB,IAAI,EAAE,OACR,GAAC;;AAED,AAAA,IAAI,CAAC,EACH,IAAI,EAAE,OAAO,EACb,KAAK,EAAE,IAAI,EACX,WAAW,EAAE,CACf,GAAC"
+}
