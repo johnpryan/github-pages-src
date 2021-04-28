@@ -2,11 +2,12 @@
 layout: about
 ---
 
-My name is John Ryan, and right now I'm building software, 
-writing music, climbing rocks, and exploring the Bay Area.
-I'm [jryanio](http://twitter.com/jryanio) on Twitter and [johnpryan](http://github.com/johnpryan) on GitHub.
+My name is John Ryan, and right now I'm building software, writing music,
+climbing rocks, and exploring the Pacific Northwest. I'm
+[jryanio](http://twitter.com/jryanio) on Twitter and
+[johnpryan](http://github.com/johnpryan) on GitHub.
 
-Current whereabouts: San Francisco Bay Area
+Current whereabouts: Portland, OR
 
 ## Projects
 
@@ -20,7 +21,8 @@ Current whereabouts: San Francisco Bay Area
 
 ## Talks
 
-- "Flutter & Web - Unite Your Code and Your Teams" - DartConf 2018 ([video][flutter-web-talk])
+- "Flutter & Web - Unite Your Code and Your Teams" - DartConf 2018
+  ([video][flutter-web-talk])
 - "Switching to Dart" - 2015 Dart Summit ([video][switch-dart])
 
 ## Patents
